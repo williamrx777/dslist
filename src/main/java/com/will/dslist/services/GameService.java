@@ -2,6 +2,7 @@ package com.will.dslist.services;
 
 import com.will.dslist.dto.GameDTO;
 import com.will.dslist.dto.GameMinDTO;
+import com.will.dslist.projections.GameMinProjection;
 import com.will.dslist.repositories.GameRepository;
 import com.will.dslist.entities.Game;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class GameService {
     @Transactional(readOnly = true)
     public List<GameMinDTO> findAll(){
         var result = gameRepository.findAll();
+        return result.stream().map(x -> new GameMinDTO(x)).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(@PathVariable Long listId){
+        List<GameMinProjection> result = gameRepository.searchByList(listId);
         return result.stream().map(x -> new GameMinDTO(x)).toList();
     }
 }
