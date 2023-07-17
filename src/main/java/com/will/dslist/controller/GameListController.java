@@ -22,7 +22,7 @@ public class GameListController {
 
     @Autowired
     private GameService gameService;
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{listId}/games")
     public List<GameMinDTO> findByList(@PathVariable Long listId){
         List<GameMinDTO> result = gameService.findByList(listId);
